@@ -25,7 +25,7 @@ for iter=1:length(order)
     channel=channels.claustrumEEGch{'frontal',ID};
     fullPath=paths{iter};
     [data{1,iter},dffBdff(iter,:),thetaBdff(iter,:),SWBdff(iter,:),...
-        powBdff(:,:,iter)]=innerFuncQuartiles(fullPath,channel,state);
+        powBdff(:,:,iter)]=innerFuncQuartiles(fullPath,channel,state, 4);
 end
  
 

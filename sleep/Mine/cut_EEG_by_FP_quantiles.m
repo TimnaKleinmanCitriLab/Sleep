@@ -1,4 +1,4 @@
-function [data,dffBdff,thetaBdff,SWBdff,powBdff]=cut_FP_by_EEG_quantiles(fullPath,channel,state, num_of_quantiles)
+function [data,dffBdff,thetaBdff,SWBdff,powBdff]=cut_EEG_by_FP_quantiles(fullPath,channel,state, num_of_quantiles)
 % cut normalized_gcamp and eeg into 4 sec increments.
 % each increment gets: average dff, power spectrum, average theta power,
 % average SW power.
@@ -13,9 +13,7 @@ SW=data.SW;
 
 %% Divide dff data to quarters, align powers accordingly and average
 
-[~, sorted_indices] = sort(SW);
-
-% TODO - change to be quantiles of gcamp VS quantiles of all types of waves
+[~, sorted_indices] = sort(dff);
 
 end_cut = 0;
 for i=1:num_of_quantiles

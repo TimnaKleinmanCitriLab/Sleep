@@ -1,18 +1,18 @@
 %%% CONNECTION BETWEEN GCAMP ACTIVATION AND POWER SPECTRUM
 function quartilePower()
 %% enter relevant data
-paths={'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\claustrumSleep openSource\sleep\ACCp\cla3',...
-    'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\claustrumSleep openSource\sleep\ACCp\cla1',...
-    'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\claustrumSleep openSource\sleep\ACCp\cla4',...
-    'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\claustrumSleep openSource\sleep\ACCp\cla6',...
-    'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\claustrumSleep openSource\sleep\ACCp\acc1',...
-    'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\claustrumSleep openSource\sleep\ACCp\acc5'};
+paths={'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\Open Source\sleep\ACCp\cla3',...
+        'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\Open Source\sleep\ACCp\cla1',...
+        'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\Open Source\sleep\ACCp\cla4',...
+        'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\Open Source\sleep\ACCp\cla6',...
+        'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\Open Source\sleep\ACCp\acc1',...
+        'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\Open Source\sleep\ACCp\acc5'};
 order={'claustrum3','claustrum1','claustrum4','claustrum6','acc1','acc5'};  %these are ACC mice specifically. make sure the order is the same order as paths entered.
-state='N';  %choose from {'W','N','R'}
+state='R';  %choose from {'W','N','R'}
 
 %%
 
-channels=load('C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\claustrumSleep openSource\sleep\claustrumEEGch.mat');     %notice path
+channels=load('C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\Open Source\sleep\claustrumEEGch.mat');     %notice path
 
 data=cell(1,length(order));
 thetaBdff=zeros(length(order),4);
@@ -25,7 +25,7 @@ for iter=1:length(order)
     channel=channels.claustrumEEGch{'frontal',ID};
     fullPath=paths{iter};
     [data{1,iter},dffBdff(iter,:),thetaBdff(iter,:),SWBdff(iter,:),...
-        powBdff(:,:,iter)]=innerFuncQuartiles(fullPath,channel,state, 4);
+        powBdff(:,:,iter)]=innerFuncQuartiles(fullPath,channel,state);
 end
  
 
@@ -63,7 +63,6 @@ tbl.sw2t=tbl.SWPower./tbl.ThetaPower;
 
 lmesw2t = fitlme(tbl,'sw2t~quartile+(1|mice)');
 lmeAnova=anova(lmesw2t);
-
 %% plots
 s2t=SWBdff./thetaBdff;
 dffF=figure;set(dffF,'outerposition',[2,42,958,954]);
@@ -87,7 +86,8 @@ quart3_sem=std(powBdff(3,:,:).*100,[],3)./sqrt(numel(order));
 quart4_sem=std(powBdff(4,:,:).*100,[],3)./sqrt(numel(order));
 
 powF1=figure;set(powF1,'outerposition',[2,42,958,954]);
-plot(data{1,1}.freq,squeeze(quart1_pow),'b');hold on
+plot(data{1,1}.freq,squeeze(quart1_pow),'b');
+hold on
 plot(data{1,1}.freq,squeeze(quart2_pow),'c');
 plot(data{1,1}.freq,squeeze(quart3_pow),'g');
 plot(data{1,1}.freq,squeeze(quart4_pow),'y');

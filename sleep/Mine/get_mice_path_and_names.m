@@ -15,7 +15,7 @@ elseif strcmp(FP_area,'OFC')
         'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\Open Source\sleep\OFCp\ofc5',...
         'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\Open Source\sleep\OFCp\ofc6',...
         'C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\Open Source\sleep\OFCp\ofc7'};
-    order={'ofc1','ofc2','ofc3','ofc4','ofc5','ofc6','ofc7'};
+    order={'ofc1','ofc2','ofc3','ofc5','ofc6','ofc7'};
 else
     error("No such FP area!")
 end

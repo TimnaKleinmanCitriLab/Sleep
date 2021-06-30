@@ -13,7 +13,7 @@ if N_before_other
 else                                                                       % N after other
     if state == 'W'
         interest_indx = find(([0, transition] == -1) & (scoring == 'N'))'; % Including this index
-    elseif state == 'R'
+    elseif state == 'R' % From what I unserstand - is'nt supposed to be possible
         interest_indx = find(([0, transition] == 1) & (scoring == 'N'))';  % Including this index
     end
     matrix = repmat(0:time_window * FS - 1, size(interest_indx, 1), 1);

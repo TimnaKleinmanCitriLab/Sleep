@@ -1,4 +1,4 @@
-function plot_NREM_FP_signal_at_transition(FP_area, time_window)
+function plot_wake_FP_signal_at_transition(FP_area, time_window)
 
 FS = 1000;
 [mice_paths, mice_names] = get_mice_path_and_names(FP_area);
@@ -47,28 +47,28 @@ for iter=1:amount_of_mice
     num_scoring(scoring == 'R') = 1;
     transition = diff(num_scoring);
     
-    [mean_signal, sem_signal, all_signals] = get_FP_before_or_after_N('W', true, time_window, scoring, transition, normalizedGcamp);
+    [mean_signal, sem_signal, all_signals] = get_FP_before_or_after_W('N', true, time_window, scoring, transition, normalizedGcamp);
     mice_N_before_W(iter, :) = mean_signal;
     mice_N_before_W_sem(iter, :) = sem_signal;
     mice_N_before_W_trial_amount(iter) = size(all_signals, 1);
     plot(ax_b_W_by_mouse, x_axe, mean_signal)
     hold(ax_b_W_by_mouse, 'on')
     
-    [mean_signal, sem_signal, all_signals] = get_FP_before_or_after_N('R', true, time_window, scoring, transition, normalizedGcamp);
+    [mean_signal, sem_signal, all_signals] = get_FP_before_or_after_W('R', true, time_window, scoring, transition, normalizedGcamp);
     mice_N_before_R(iter, :) = mean_signal;
     mice_N_before_R_sem(iter, :) = sem_signal;
     mice_N_before_R_trial_amount(iter) = size(all_signals, 1);
     plot(ax_b_R_by_mouse, x_axe, mean_signal);
     hold(ax_b_R_by_mouse, 'on')
     
-    [mean_signal, sem_signal, all_signals] = get_FP_before_or_after_N('W', false, time_window, scoring, transition, normalizedGcamp);
+    [mean_signal, sem_signal, all_signals] = get_FP_before_or_after_W('N', false, time_window, scoring, transition, normalizedGcamp);
     mice_N_after_W(iter, :) = mean_signal;
     mice_N_after_W_sem(iter, :) = sem_signal;
     mice_N_after_W_trial_amount(iter) = size(all_signals, 1);
     plot(ax_a_W_by_mouse, x_axe, mean_signal);
     hold(ax_a_W_by_mouse, 'on')
     
-    [mean_signal, sem_signal, all_signals] = get_FP_before_or_after_N('R', false, time_window, scoring, transition, normalizedGcamp);
+    [mean_signal, sem_signal, all_signals] = get_FP_before_or_after_W('R', false, time_window, scoring, transition, normalizedGcamp);
     mice_N_after_R(iter, :) = mean_signal;
     mice_N_after_R_sem(iter, :) = sem_signal;
     mice_N_after_R_trial_amount(iter) = size(all_signals, 1);
@@ -83,29 +83,29 @@ for iter=1:amount_of_mice
     shadedErrorBar(x_axe, mice_N_before_R(iter, :),  mice_N_before_R_sem(iter, :), 'lineProps', 'g')
     hold on 
     mouse_name = mice_names(iter);
-    title(mouse_before_subplot, {mouse_name{1}, "W samples="+int2str(mice_N_before_W_trial_amount(iter)), "R samples="+int2str(mice_N_before_R_trial_amount(iter))})
+    title(mouse_before_subplot, {mouse_name{1}, "N samples="+int2str(mice_N_before_W_trial_amount(iter)), "R samples="+int2str(mice_N_before_R_trial_amount(iter))})
     mouse_after_subplot = subplot(2, amount_of_mice, iter + amount_of_mice);
     shadedErrorBar(x_axe, mice_N_after_W(iter, :),  mice_N_after_W_sem(iter, :), 'lineProps', 'm')
     hold on
     shadedErrorBar(x_axe, mice_N_after_R(iter, :),  mice_N_after_R_sem(iter, :), 'lineProps', 'c')
-    title(mouse_after_subplot, {"W samples="+int2str(mice_N_after_W_trial_amount(iter)), "R samples="+int2str(mice_N_after_R_trial_amount(iter))})
+    title(mouse_after_subplot, {"N samples="+int2str(mice_N_after_W_trial_amount(iter)), "R samples="+int2str(mice_N_after_R_trial_amount(iter))})
     
 end
 % All mice same plot
 legend(ax_b_R_by_mouse, mice_names)
 
-title(ax_b_W_by_mouse, "Mean mosue signal - N before W")
-title(ax_b_R_by_mouse, "Mean mosue signal - N before R")
-title(ax_a_W_by_mouse, "Mean mosue signal - N after W")
-title(ax_a_R_by_mouse, "Mean mosue signal - N after R")
+title(ax_b_W_by_mouse, "Mean mosue signal - W before N")
+title(ax_b_R_by_mouse, "Mean mosue signal - W before R")
+title(ax_a_W_by_mouse, "Mean mosue signal - W after N")
+title(ax_a_R_by_mouse, "Mean mosue signal - W after R")
 
 % Each mouse dif subplot
 % set(0, 'CurrentFigure', fig_each_mouse_dif_subplot)
 mouse_before_subplot = subplot(2, amount_of_mice, amount_of_mice);
-legend("N before W", "N before R")
+legend("W before N", "W before R")
 mouse_after_subplot = subplot(2, amount_of_mice, 2 * amount_of_mice);
-legend("N after W", "N after R")
-sgtitle("NREM signal of mice type " + FP_area)
+legend("W after N", "W after R")
+sgtitle("Wake signal of mice type " + FP_area)
 
 
 % Calculate + plot all mice 
@@ -120,14 +120,14 @@ ax_before = subplot(1, 2, 1);
 shadedErrorBar(x_axe, mean(b_W_mean, 1),  std(b_W_mean, 0, 1)./sqrt(size(b_W_mean, 1)), 'lineProps', 'b')
 hold(ax_before, 'on')
 shadedErrorBar(x_axe, mean(b_R_mean, 1),  std(b_R_mean, 0, 1)./sqrt(size(b_R_mean, 1)), 'lineProps', 'g')
-legend(ax_before, "N before W", "N before R")
+legend(ax_before, "W before N", "W before R")
 ax_after = subplot(1, 2, 2);
 shadedErrorBar(x_axe, mean(a_W_mean, 1),  std(a_W_mean, 0, 1)./sqrt(size(a_W_mean, 1)), 'lineProps', 'm')
 hold(ax_after, 'on')
 shadedErrorBar(x_axe, mean(a_R_mean, 1),  std(a_R_mean, 0, 1)./sqrt(size(a_R_mean, 1)), 'lineProps', 'c')
-legend(ax_after, "N after W", "N after R")
+legend(ax_after, "W after N", "W after R")
 
 title(ax_before, "Mean signal all mice before")
 title(ax_after, "Mean signal all mice after")
-sgtitle("NREM signal of mice type " + FP_area)
+sgtitle("Wake signal of mice type " + FP_area)
 end

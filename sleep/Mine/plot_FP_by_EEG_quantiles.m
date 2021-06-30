@@ -42,7 +42,7 @@ for i = 1:length(checked_wavelengths)
 end
 %% plots
 
-powF=figure;
+powF=figure();
 set(powF,'outerposition',[2,42,958,954]);
 legends = strings(1, num_quantiles);
 

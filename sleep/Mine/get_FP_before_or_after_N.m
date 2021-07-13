@@ -1,5 +1,16 @@
+
 function [mean_signal, sem_signal, all_signals] = get_FP_before_or_after_N(state, N_before_other, time_window, scoring, transition, FP)
-% N after isn't needed!!!
+% Returns the mean signal of the wanted signal (over all found instances),
+% the SEM of the signal, and all the found instances.
+
+% state - state to check vs. awake, choose from {'W', 'R'}.
+% N_before_other - boolian of should NREM be before or after other state
+% time_window - time to look before / after.
+% scoring - vector of the signal scoring (NREM / REM / Awake etc).
+% transition - difference between the wanted state and NREM.
+% FP - vector of the signal.
+
+% NOTE: NREM after isn't useful.
 
 FS = 1000;
 

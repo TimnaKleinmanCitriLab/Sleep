@@ -1,4 +1,16 @@
 function plot_NREM_FP_signal_at_transition(FP_area, time_window)
+% Plots the NREM FP signal:
+%   a. Before awake and before REM - This is relevant.
+%   b. After awake and after REM - Irrelevant for NREM.
+% Plots each of these by mouse, and overall mice mean.
+
+% FP_area - {'ACC', 'OFC'}
+% time_window - time to look before / after. NOTICE! takes the signal only
+%               if the new state is stable over the hole time window.
+%               Therfore taking a time window that is too big will results
+%               in very few trials.
+
+% NOT WRITEN GREAT (very repetative)
 
 FS = 1000;
 [mice_paths, mice_names] = get_mice_path_and_names(FP_area);
@@ -33,8 +45,7 @@ ax_a_R_by_mouse = subplot(2, 2, 4);
 fig_each_mouse_dif_subplot = figure();
 set(fig_each_mouse_dif_subplot,'outerposition',[38,100,1814,420]);
 
-% Gather data + plot by mouse - all mice same figure and each mouse
-%                               different subplot
+% Gather data + plot by mouse - all mice same figure and each mouse different subplot
 for iter=1:amount_of_mice
     fullPath=mice_paths{iter};
     load([fullPath '\ZnormalizedGcamp.mat']);                              % normalizedGcamp

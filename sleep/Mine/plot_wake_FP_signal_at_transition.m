@@ -1,4 +1,16 @@
 function plot_wake_FP_signal_at_transition(FP_area, time_window)
+% Plots the wake FP signal:
+%   a. Before NREM and before REM - Irrelevant for wake.
+%   b. After NREM and after REM - This is relevant.
+% Plots each of these by mouse, and overall mice mean.
+
+% FP_area - {'ACC', 'OFC'}
+% time_window - time to look before / after. NOTICE! takes the signal only
+%               if the new state is stable over the hole time window.
+%               Therfore taking a time window that is too big will results
+%               in very few trials.
+
+% NOT WRITEN GREAT (very repetative)
 
 FS = 1000;
 [mice_paths, mice_names] = get_mice_path_and_names(FP_area);

@@ -1,10 +1,10 @@
 function plot_FP_by_EEG_quantiles(state, FP_area, EEG_area, num_quantiles)
-% Plots the different EEG waves by FP quantiles
+% Plots the different FP by EEG quantiles (opposite of plot_EEG_by_FP_quantiles)
+
 % state - choose from {'W','N','R'}
 % FP_area - {'ACC', 'OFC'}
 % EEG_area - {'frontal', 'parietal'}
 
-COLORS = ['b', 'c', 'g', 'y'];
 %% Validation tests
 allowed_states = {'W', 'N', 'R'};
 allowed_FP_areas = {'ACC', 'OFC'};
@@ -17,7 +17,7 @@ end
 %% Choose and load data
 [mice_paths, mice_names] = get_mice_path_and_names(FP_area);
 
-channels=load('C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\Open Source\sleep\claustrumEEGch.mat');     %notice path
+channels=load('C:\Users\owner\Google Drive\University\ElscLab\Actual Work\Noa Tel Aviv Sleep Project\Open Source\sleep\claustrumEEGch.mat');     %notice path
 
 checked_wavelengths = ["SW", "theta"];
 
@@ -26,7 +26,6 @@ dffBdff=zeros(length(checked_wavelengths), length(mice_names), num_quantiles);
 thetaBdff=zeros(length(checked_wavelengths), length(mice_names), num_quantiles);
 SWBdff=zeros(length(checked_wavelengths), length(mice_names), num_quantiles);
 powBdff=zeros(length(checked_wavelengths), length(mice_names), num_quantiles,2000);
-
 
 
 % Recieve loaded data
@@ -46,11 +45,11 @@ powF=figure();
 set(powF,'outerposition',[2,42,958,954]);
 legends = strings(1, num_quantiles);
 
-% TODO - make sure sem is calculated right
 FP_mean = squeeze(mean(dffBdff, 2));
-FP_sem = squeeze(std(dffBdff, 0, 2)./sqrt(numel(mice_names))); % TODO - see how did sme in other file, and think which one is right
+FP_sem = squeeze(std(dffBdff, 0, 2)./sqrt(numel(mice_names)));
 for i = 1:num_quantiles
-    errorbar(1:length(checked_wavelengths), FP_mean(:, i), FP_sem(:, i), '-o')
+    plot(1:length(checked_wavelengths), FP_mean(:, i), '-o')
+    % errorbar(1:length(checked_wavelengths), FP_mean(:, i), FP_sem(:, i), '-o') % Can uncomment this line, and comment the prev line if want to show error bars
     hold on
     legends(i) = "quartile " + int2str(i);
 end

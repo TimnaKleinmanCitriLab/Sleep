@@ -1,8 +1,11 @@
-function data=cut_signals_to_windows(fullPath,channel,state)
+function data=cut_signals_to_windows(fullPath, channel, state)
 % cut normalized_gcamp and eeg into 4 sec increments.
 % each increment gets: average dff, power spectrum, average theta power,
 % average SW power.
-% correlation between sleep depth and ACC activation for each mouse
+
+% fullPath - the path of the mouse data
+% channel - the wanted EEG channel (0 / 1)
+% state - choose from {'W','N','R'}
 
 FS=1000;
 
@@ -39,16 +42,15 @@ for iter=1:length(BEG)
     gcamp_seg=normalizedGcamp(BEG(iter):FIN(iter));
     eeg_seg=eeg(BEG(iter):FIN(iter));
     dff(iter)= mean(gcamp_seg);
-    [F,pow(iter,:)]=myFFT(eeg_seg,FS);
+    [F,pow(iter,:)]= myFFT(eeg_seg,FS);
     pow(iter,:)=pow(iter,:)./sum(pow(iter,:));  % Normalize to sum to 1
     theta(iter) = (sum(pow(iter,F>=6 & F<=9))) * 100;
     SW(iter)=(sum(pow(iter,F<=4))) * 100;
 end
+
 data.dff=dff;
 data.alpha=theta;
 data.freq=F;
 data.pow=pow;
 data.SW=SW;
-
-
 end

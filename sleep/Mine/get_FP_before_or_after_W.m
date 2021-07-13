@@ -1,5 +1,15 @@
 function [mean_signal, sem_signal, all_signals] = get_FP_before_or_after_W(state, W_before_other, time_window, scoring, transition, FP)
-% N after isn't needed!!!
+% Returns the mean signal of the wanted signal (over all found instances),
+% the SEM of the signal, and all the found instances.
+
+% state - state to check vs. awake, choose from {'N', 'R'}.
+% W_before_other - boolian of should wake be before or after other state
+% time_window - time to look before / after.
+% scoring - vector of the signal scoring (NREM / REM / Awake etc).
+% transition - difference between the wanted state and wake.
+% FP - vector of the signal.
+
+% NOTE: Wake before isn't useful.
 
 FS = 1000;
 
@@ -30,12 +40,9 @@ for row_index = 1:size(wanted_indices, 1)
 end
 
 signals = signals(all(~isnan(signals),2),:);
-% disp("Before:" + should_take_before + ", State:" + state + ", Amount of signals: " + size(signals, 1))
 mean_signal = mean(signals, 1);
 sem_signal = std(signals, 0, 1)./sqrt(size(signals, 1));
 
 all_signals = signals;
-
-
 
 end

@@ -1,11 +1,15 @@
 function plot_EEG_by_FP_quantiles(state, FP_area, EEG_area, num_quantiles)
-% Plots the different EEG waves by FP quantiles
+% Plots the different EEG waves by FP quantiles - similar to the plot in
+% the paper only I added shaded error bars (was a sanity check)
+
 % state - choose from {'W','N','R'}
 % FP_area - {'ACC', 'OFC'}
 % EEG_area - {'frontal', 'parietal'}
+% num_quantiles - standrd is 4
 
 COLORS = ['b', 'c', 'g', 'y'];
-%% Validation tests
+
+%% Validation of input tests
 allowed_states = {'W', 'N', 'R'};
 allowed_FP_areas = {'ACC', 'OFC'};
 allowed_EEG_areas = {'frontal', 'parietal'};
@@ -17,7 +21,8 @@ end
 %% Choose and load data
 [mice_paths, mice_names] = get_mice_path_and_names(FP_area);
 
-channels=load('C:\Users\owner\Google Drive\University\ElscLab\Code\Sleep Matlab\Open Source\sleep\claustrumEEGch.mat');     %notice path
+% Should change path to relavent path !
+channels=load('C:\Users\owner\Google Drive\University\ElscLab\Actual Work\Noa Tel Aviv Sleep Project\Open Source\sleep\claustrumEEGch.mat');     
 
 data=cell(length(mice_names));
 dffBdff=zeros(length(mice_names), num_quantiles);

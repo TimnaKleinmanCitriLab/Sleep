@@ -6,7 +6,7 @@
 
 
 ## Intro
-After trying to work with the raw data (saved in `W:\shared\Timna\Noa Tel Aviv Project\From Noa`) I understood it will take too long and that it was too complicated. So, I moved to use the already zscored and cleaned data from the open-source files (that are presented with the paper).
+After trying to work with the raw data (saved in `W:\shared\Timna\Noa Tel Aviv Project\From Noa`) I understood it will take too long. So, I moved to use the already zscored and cleaned data from the open-source files (that are presented with the paper).
 
 **NOTE**: I worked only with the sleep data, Noa said there are some problems with the open-source SEA data.
 
